@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use  Illuminate\support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -34,7 +35,22 @@ class FinancialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $result = json_encode($data['result']);
+
+        DB::table('financial_quiz')->insert(
+            [
+                'question1' => $data['question1'],
+                'question2' => $data['question2'],
+                'money' => $data['money'],
+                'email' => $data['email'],
+                'result' => $result,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        );
+
+        return response(collect($result));
     }
 
     /**
