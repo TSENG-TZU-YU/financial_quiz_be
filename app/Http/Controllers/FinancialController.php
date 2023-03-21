@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use  Illuminate\support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\Models\FinancialQuizModel;
+
 class FinancialController extends Controller
 {
     /**
@@ -12,9 +14,24 @@ class FinancialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return 'aaa';
+        $data = $request->all();
+        // $result = json_encode($data['result']);
+
+        // FinancialQuizModel::insert(
+        //     [
+        //         'question1' => $data['question1'],
+        //         'question2' => $data['question2'],
+        //         'money' => $data['money'],
+        //         'email' => $data['email'],
+        //         'result' => $result,
+        //         'created_at' => now(),
+        //         'updated_at' => now()
+        //     ]
+        // );
+
+        return response($data);
     }
 
     /**
@@ -36,21 +53,21 @@ class FinancialController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $result = json_encode($data['result']);
+        // $result = json_encode($data['result']);
 
-        DB::table('financial_quiz')->insert(
+        FinancialQuizModel::insert(
             [
-                'question1' => $data['question1'],
-                'question2' => $data['question2'],
-                'money' => $data['money'],
-                'email' => $data['email'],
-                'result' => $result,
+                'question1' => $data['quit1Val'],
+                'question2' => $data['quit2Val'],
+                'money' => $data['moneyVal'],
+                'email' => $data['emailVal'],
+                // 'result' => $result,
                 'created_at' => now(),
                 'updated_at' => now()
             ]
         );
 
-        return response(collect($result));
+        return response($data);
     }
 
     /**
