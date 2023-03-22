@@ -51,7 +51,8 @@ class FinancialController extends Controller
         $mailData = [
             'mail' => $data['result']['emailVal'],
             'qone' => $data['result']['quit1Val'],
-            'qtwo' => $data['result']['quit2Val']
+            'qtwo' => $data['result']['quit2Val'],
+            'money' => $data['result']['moneyVal']
         ];
         FinancialQuizModel::insert(
             [
@@ -64,7 +65,7 @@ class FinancialController extends Controller
                 'updated_at' => now()
             ]
         );
-        Mail::to($data['result']['emailVal'])->send(new DemoMail($mailData));
+        // Mail::to($data['result']['emailVal'])->send(new DemoMail($mailData));
 
         return response()->json('ok');
     }

@@ -5,8 +5,10 @@
 </head>
 <body>
     <h1>{{ $mailData['mail']}}</h1>
+    <p>{{ $mailData['money'] }}</p>
     <p>{{ $mailData['qone'] }}</p>
     <p>{{ $mailData['qtwo'] }}</p>
+    
     
   
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
