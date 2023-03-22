@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use  Illuminate\support\Facades\DB;
+use Illuminate\support\Facades\DB;
 use Illuminate\Http\Request;
+use Mail;
+use App\Mail\DemoMail;
 
 use App\Models\FinancialQuizModel;
 use App\Models\quiz1Model;
@@ -46,7 +48,11 @@ class FinancialController extends Controller
     {
         $data = $request->all();
         $result = json_encode($data['result']);
-
+        $mailData = [
+            'mail' => $data['result']['emailVal'],
+            'qone' => $data['result']['quit1Val'],
+            'qtwo' => $data['result']['quit2Val']
+        ];
         FinancialQuizModel::insert(
             [
                 'question1' => $data['result']['quit1Val'],
@@ -58,6 +64,7 @@ class FinancialController extends Controller
                 'updated_at' => now()
             ]
         );
+        Mail::to($data['result']['emailVal'])->send(new DemoMail($mailData));
 
         return response()->json('ok');
     }
