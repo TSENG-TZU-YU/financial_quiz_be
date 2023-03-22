@@ -53,21 +53,21 @@ class FinancialController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        // $result = json_encode($data['result']);
+        $result = json_encode($data['result']);
 
         FinancialQuizModel::insert(
             [
-                'question1' => $data['quit1Val'],
-                'question2' => $data['quit2Val'],
-                'money' => $data['moneyVal'],
-                'email' => $data['emailVal'],
-                // 'result' => $result,
+                'question1' => $data['result']['quit1Val'],
+                'question2' => $data['result']['quit2Val'],
+                'money' => $data['result']['moneyVal'],
+                'email' => $data['result']['emailVal'],
+                'result' => $result,
                 'created_at' => now(),
                 'updated_at' => now()
             ]
         );
 
-        return response($data);
+        return response($data['result']);
     }
 
     /**
