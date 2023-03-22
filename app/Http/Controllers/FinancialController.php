@@ -53,7 +53,7 @@ class FinancialController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $result = json_encode($data);
+        $result = json_encode($data['result']);
 
         FinancialQuizModel::insert(
             [
