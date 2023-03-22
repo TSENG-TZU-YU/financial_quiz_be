@@ -6,6 +6,8 @@ use  Illuminate\support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Models\FinancialQuizModel;
+use App\Models\quiz1Model;
+use App\Models\quiz2Model;
 
 class FinancialController extends Controller
 {
@@ -14,25 +16,15 @@ class FinancialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $data = $request->all();
-        // $result = json_encode($data['result']);
+        $data = quiz1Model::get();
+        $data1 = quiz2Model::get();
 
-        // FinancialQuizModel::insert(
-        //     [
-        //         'question1' => $data['question1'],
-        //         'question2' => $data['question2'],
-        //         'money' => $data['money'],
-        //         'email' => $data['email'],
-        //         'result' => $result,
-        //         'created_at' => now(),
-        //         'updated_at' => now()
-        //     ]
-        // );
-
-        return response($data);
+        return response()->json(['quiz1' => collect($data), 'quiz2' => collect($data1)]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -67,7 +59,7 @@ class FinancialController extends Controller
             ]
         );
 
-        return response($data['result']);
+        return response()->json('ok');
     }
 
     /**
