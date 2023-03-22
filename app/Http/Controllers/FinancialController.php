@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use  Illuminate\support\Facades\DB;
+use Illuminate\support\Facades\DB;
 use Illuminate\Http\Request;
+use Mail;
+use App\Mail\DemoMail;
 
 use App\Models\FinancialQuizModel;
 
@@ -14,24 +16,9 @@ class FinancialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $data = $request->all();
-        // $result = json_encode($data['result']);
 
-        // FinancialQuizModel::insert(
-        //     [
-        //         'question1' => $data['question1'],
-        //         'question2' => $data['question2'],
-        //         'money' => $data['money'],
-        //         'email' => $data['email'],
-        //         'result' => $result,
-        //         'created_at' => now(),
-        //         'updated_at' => now()
-        //     ]
-        // );
-
-        return response($data);
     }
 
     /**
@@ -54,7 +41,11 @@ class FinancialController extends Controller
     {
         $data = $request->all();
         $result = json_encode($data['result']);
-
+        $mailData = [
+            'mail' => $data['result']['emailVal'],
+            'qone' => $data['result']['quit1Val'],
+            'qtwo' => $data['result']['quit2Val']
+        ];
         FinancialQuizModel::insert(
             [
                 'question1' => $data['result']['quit1Val'],
@@ -66,6 +57,7 @@ class FinancialController extends Controller
                 'updated_at' => now()
             ]
         );
+        Mail::to($data['result']['emailVal'])->send(new DemoMail($mailData));
 
         return response($data['result']);
     }
